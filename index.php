@@ -1,4 +1,6 @@
 <?php
+
+use \App\Session\User as SessionUser;
 session_start();
 define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'] . '/Ampera/');
 
@@ -7,7 +9,7 @@ $url = explode("/", $_SERVER['REQUEST_URI']); // Pega um array da URL
 function validaLogin()
 {
     // Se o usuário não estiver logado, redireciona para a página de login
-    if (isset($_SESSION['autenticado'])) {
+    if (isset($_SESSION['autenticado']) || SessionUser::Logado()) {
         header("Location: /Ampera/menu");
         exit();
     }else{
