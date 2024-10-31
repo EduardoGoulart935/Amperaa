@@ -1,3 +1,6 @@
+<?php
+var_dump($_SESSION['logado']);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,7 +23,7 @@
     </div>
     <div id="ofertas-container">
     </div>
-
+    <a href="/Ampera/controller/logoutGoogle">e </a>
     <script>
         function criarCardOferta(oferta) {
             const card = document.createElement('div');

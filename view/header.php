@@ -1,6 +1,9 @@
 <?php
-$info = \App\Session\User::getInfo();
+
 @session_start();
+
+//$info = \App\Session\User::getInfo();
+
 require_once(ROOT_PATH . 'model/conexao.php');
 
 $id = $_SESSION['id_perfil'];
@@ -46,7 +49,7 @@ if ($total_reg > 0) {
                 <a href="sobre">Sobre</a>
                 <a href="criar-oferta">Crie sua Oferta</a>
                 <a href="perfil">Perfil</a>
-                <span><?php echo $login || $info['name'] ?></span>
+                <span><?php echo $login ?></span>
             </div>
             <a href="/Ampera/logout"><img src="/Ampera/imagens/<?= $foto_perfil ?>" alt="User Avatar"></a>
         </div>

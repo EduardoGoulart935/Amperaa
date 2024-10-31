@@ -10,7 +10,7 @@ use \App\Session\User as SessionUser;
 
 // VERFICA OS CAMPOS OBRIGATÓRIO
 if(!isset($_POST['credential']) || !isset($_POST['g_csrf_token'])){
-    header("Location: login");
+    header("Location: /Ampera/login");
     exit;
 }
 
@@ -34,7 +34,7 @@ $payload = $client->verifyIdToken($_POST['credential']);
 //VERIFICA SE OS DADOS DO PAYLOAD
 if (isset($payload['email'])) {
     SessionUser::login($payload['name'],$payload['email']);
-    header("Location: menu");
+    header("Location: /Ampera/menu");
     exit;
 } 
 

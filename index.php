@@ -1,6 +1,4 @@
 <?php
-
-use \App\Session\User as SessionUser;
 session_start();
 define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT'] . '/Ampera/');
 
@@ -9,26 +7,27 @@ $url = explode("/", $_SERVER['REQUEST_URI']); // Pega um array da URL
 function validaLogin()
 {
     // Se o usuário não estiver logado, redireciona para a página de login
-    if (isset($_SESSION['autenticado']) || SessionUser::Logado()) {
+    if (isset($_SESSION['autenticado']) || isset($_SESSION['logado'])) {
         header("Location: /Ampera/menu");
         exit();
-    }else{
+    } else {
         header("Location: /Ampera/login");
         exit();
     }
 }
 
-function VerificaSessao(){
-    if (!isset($_SESSION['id_perfil'])){
+function VerificaSessao()
+{
+    if (!isset($_SESSION['id_perfil']) || !isset($_SESSION['logado'])) {
         header("Location: login");
     }
 }
 
 // Variável para controlar se o header/footer deve ser exibido
-$exibirHeaderFooter = isset($_SESSION['autenticado']) || isset($_SESSION['cadastro1_completo']);
+$exibirHeaderFooter = (isset($_SESSION['autenticado']) || isset($_SESSION['logado'])) ||isset($_SESSION['cadastro1_completo']);
 
 // Exibe o header se o usuário estiver autenticado e não estiver nas páginas de cadastro ou login
-if ($exibirHeaderFooter && !in_array($url[2], ['cadastro', 'cadastro1', 'login', 'autenticar'])) {
+if ($exibirHeaderFooter && !in_array($url[2], ['cadastro', 'cadastro1', 'login', 'autenticar', 'logado'])) {
     require_once(ROOT_PATH . 'view/header.php');
 }
 
@@ -55,6 +54,9 @@ if (count($url) > 5) {
 switch ($url[2]) {
     case 'autenticar':
         include './controller/autenticar.php';
+        break;
+    case 'autenticarGoogle':
+        include './controller/autenticarGoogle.php';
         break;
     case 'login':
         include 'view/login.php';
@@ -89,7 +91,7 @@ switch ($url[2]) {
         include 'view/perfil.php';
         break;
     case 'suas_ofertas':
-        VerificaSessao();  
+        VerificaSessao();
         include 'view/suas_ofertas.php';
         break;
     case 'criar-oferta':
@@ -99,12 +101,15 @@ switch ($url[2]) {
     case 'logout':
         include './controller/logout.php';
         break;
+    case 'logoutGoogle':
+        include './controller/logoutGoogle.php';
+        break;
     default:
         header("Location: /Ampera/login");
         exit();
 }
 
 // Exibe o footer se o usuário estiver autenticado e não estiver nas páginas de cadastro ou login
-if ($exibirHeaderFooter && !in_array($url[2], ['cadastro', 'cadastro1', 'login', 'autenticar'])) {
+if ($exibirHeaderFooter && !in_array($url[2], ['cadastro', 'cadastro1', 'login', 'autenticar', 'logado'])) {
     require_once(ROOT_PATH . 'view/footer.php');
 }

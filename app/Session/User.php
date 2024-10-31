@@ -26,6 +26,8 @@ class User{
             'name' => $name,
             'email' => $email
         ];
+        $_SESSION['logado'] = true;
+        $_SESSION['autenticado'] = true;
     }
     /**
      * MÉTODO RESPONSÁVEL POR VERIFICAR SE O USUÁRIO ESTÁ LOGADO
@@ -34,9 +36,10 @@ class User{
     public static function Logado(){
         //INICIA A SESSÃO DO USUÁRIO 
         self::init();
-
+        
         //RETORNA A EXISTENCIA DO ÍNDICE USER NA SESSÃO
         return isset($_SESSION['user']);
+        
     }
     /**
      * MÉTODO RESPONSÁVEL POR RETORNAR AS INFORMAÇÕES GUARDADAS NA SESSÃO DO USUÁRIO
